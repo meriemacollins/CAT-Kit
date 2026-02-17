@@ -1,0 +1,99 @@
+
+salloc -n1 -N1 -p MSC
+
+squeue -u mcollins
+
+ssh compute01
+
+module li 
+
+gatk PreprocessIntervals -R /data4/wheeler_shared/reference/Broad/Homo_sapiens_assembly38_noALT_noHLA_noDecoy.fasta.gz --bin-length 0 --interval-merging-rule OVERLAPPING_ONLY -O sandbox/targets_C.preprocessed.interval_list
+
+gatk CollectReadCounts -I /data4/wheeler_shared/data_files/GATK_Tutorial/tutorial_11682/tumor.bam -L sandbox/targets_C.preprocessed.interval_list --interval-merging-rule OVERLAPPING_ONLY -O sandbox/tumor.counts.hdf5
+
+gatk --java-options "-Xmx6500m" CreateReadCountPanelOfNormals \
+    -I /data4/wheeler_shared/data_files/GATK_Tutorial/tutorial_11682/HG00133.alt_bwamem_GRCh38DH.20150826.GBR.exome.counts.hdf5 \
+    -I /data4/wheeler_shared/data_files/GATK_Tutorial/tutorial_11682/HG00733.alt_bwamem_GRCh38DH.20150826.PUR.exome.counts.hdf5 \
+    -I /data4/wheeler_shared/data_files/GATK_Tutorial/tutorial_11682/NA19654.alt_bwamem_GRCh38DH.20150826.MXL.exome.counts.hdf5 \
+    --minimum-interval-median-percentile 5.0 \
+    -O sandbox/cnvponC.pon.hdf5
+
+gatk --java-options "-Xmx12g" DenoiseReadCounts \
+    -I /data4/wheeler_shared/data_files/GATK_Tutorial/tutorial_11682/hcc1143_T_clean.counts.hdf5 \
+    --count-panel-of-normals /data4/wheeler_shared/data_files/GATK_Tutorial/tutorial_11682/cnvponC.pon.hdf5 \
+    --standardized-copy-ratios sandbox/hcc1143_T_clean.standardizedCR.tsv \
+    --denoised-copy-ratios sandbox/hcc1143_T_clean.denoisedCR.tsv
+
+[mcollins@compute01 sandbox]$ ls
+cnvponC.pon.hdf5  hcc1143_T_clean.denoisedCR.tsv  hcc1143_T_clean.standardizedCR.tsv  targets_C.preprocessed.interval_list  tumor.counts.hdf5
+
+[mcollins@compute01 sandbox]$ mkdir plots
+
+gatk PlotDenoisedCopyRatios --standardized-copy-ratios sandbox/hcc1143_T_clean.standardizedCR.tsv --denoised-copy-ratios sandbox/hcc1143_T_clean.denoisedCR.tsv --sequence-dictionary /data4/wheeler_shared/data_files/GATK_Tutorial/tutorial_11682/Homo_sapiens_assembly38.dict --minimum-contig-length 46709983 --output sandbox/plots --output-prefix hcc1143_T_clean
+
+A USER ERROR has occurred: Unable to execute Rscript command: Please add the Rscript directory to your environment ${PATH}
+
+#Tried to load R
+[mcollins@compute01 ~]$ module load R
+[mcollins@compute01 ~]$ which Rscript
+/opt/ohpc/pub/libs/gnu7/R/3.5.0/bin/Rscript
+
+gatk PlotDenoisedCopyRatios --standardized-copy-ratios sandbox/hcc1143_T_clean.standardizedCR.tsv --denoised-copy-ratios sandbox/hcc1143_T_clean.denoisedCR.tsv --sequence-dictionary /data4/wheeler_shared/data_files/GATK_Tutorial/tutorial_11682/Homo_sapiens_assembly38.dict --minimum-contig-length 46709983 --output sandbox/plots --output-prefix hcc1143_T_clean
+
+Using GATK jar /data4/wheeler_shared/bin/gatk-4.6.2.0/gatk-package-4.6.2.0-local.jar
+Running:
+    java -Dsamjdk.use_async_io_read_samtools=false -Dsamjdk.use_async_io_write_samtools=true -Dsamjdk.use_async_io_write_tribble=false -Dsamjdk.compression_level=2 -jar /data4/wheeler_shared/bin/gatk-4.6.2.0/gatk-package-4.6.2.0-local.jar PlotDenoisedCopyRatios --standardized-copy-ratios sandbox/hcc1143_T_clean.standardizedCR.tsv --denoised-copy-ratios sandbox/hcc1143_T_clean.denoisedCR.tsv --sequence-dictionary /data4/wheeler_shared/data_files/GATK_Tutorial/tutorial_11682/Homo_sapiens_assembly38.dict --minimum-contig-length 46709983 --output sandbox/plots --output-prefix hcc1143_T_clean
+13:55:33.275 INFO  NativeLibraryLoader - Loading libgkl_compression.so from jar:file:/data4/wheeler_shared/bin/gatk-4.6.2.0/gatk-package-4.6.2.0-local.jar!/com/intel/gkl/native/libgkl_compression.so
+13:55:33.435 INFO  PlotDenoisedCopyRatios - ------------------------------------------------------------
+13:55:33.439 INFO  PlotDenoisedCopyRatios - The Genome Analysis Toolkit (GATK) v4.6.2.0
+13:55:33.440 INFO  PlotDenoisedCopyRatios - For support and documentation go to https://software.broadinstitute.org/gatk/
+13:55:33.440 INFO  PlotDenoisedCopyRatios - Executing as mcollins@compute01 on Linux v3.10.0-1160.88.1.el7.x86_64 amd64
+13:55:33.440 INFO  PlotDenoisedCopyRatios - Java runtime: Java HotSpot(TM) 64-Bit Server VM v22.0.1+8-16
+13:55:33.440 INFO  PlotDenoisedCopyRatios - Start Date/Time: 11 February 2026, 13:55:33 GMT
+13:55:33.440 INFO  PlotDenoisedCopyRatios - ------------------------------------------------------------
+13:55:33.440 INFO  PlotDenoisedCopyRatios - ------------------------------------------------------------
+13:55:33.441 INFO  PlotDenoisedCopyRatios - HTSJDK Version: 4.2.0
+13:55:33.442 INFO  PlotDenoisedCopyRatios - Picard Version: 3.4.0
+13:55:33.442 INFO  PlotDenoisedCopyRatios - Built for Spark Version: 3.5.0
+13:55:33.445 INFO  PlotDenoisedCopyRatios - HTSJDK Defaults.COMPRESSION_LEVEL : 2
+13:55:33.446 INFO  PlotDenoisedCopyRatios - HTSJDK Defaults.USE_ASYNC_IO_READ_FOR_SAMTOOLS : false
+13:55:33.446 INFO  PlotDenoisedCopyRatios - HTSJDK Defaults.USE_ASYNC_IO_WRITE_FOR_SAMTOOLS : true
+13:55:33.446 INFO  PlotDenoisedCopyRatios - HTSJDK Defaults.USE_ASYNC_IO_WRITE_FOR_TRIBBLE : false
+13:55:33.446 INFO  PlotDenoisedCopyRatios - Deflater: IntelDeflater
+13:55:33.446 INFO  PlotDenoisedCopyRatios - Inflater: IntelInflater
+13:55:33.447 INFO  PlotDenoisedCopyRatios - GCS max retries/reopens: 20
+13:55:33.447 INFO  PlotDenoisedCopyRatios - Requester pays: disabled
+13:55:33.447 INFO  PlotDenoisedCopyRatios - Initializing engine
+13:55:33.447 INFO  PlotDenoisedCopyRatios - Done initializing engine
+13:55:33.451 INFO  PlotDenoisedCopyRatios - Reading and validating input files...
+13:55:34.669 INFO  PlotDenoisedCopyRatios - Contigs above length threshold: {chr1=248956422, chr2=242193529, chr3=198295559, chr4=190214555, chr5=181538259, chr6=170805979, chr7=159345973, chr8=145138636, chr9=138394717, chr10=133797422, chr11=135086622, chr12=133275309, chr13=114364328, chr14=107043718, chr15=101991189, chr16=90338345, chr17=83257441, chr18=80373285, chr19=58617616, chr20=64444167, chr21=46709983, chr22=50818468, chrX=156040895, chrY=57227415}
+13:55:34.800 INFO  PlotDenoisedCopyRatios - Writing plots to /home/mcollins/sandbox/plots...
+13:55:35.101 INFO  PlotDenoisedCopyRatios - Shutting down engine
+[11 February 2026, 13:55:35 GMT] org.broadinstitute.hellbender.tools.copynumber.plotting.PlotDenoisedCopyRatios done. Elapsed time: 0.03 minutes.
+Runtime.totalMemory()=331350016
+org.broadinstitute.hellbender.utils.R.RScriptExecutorException: 
+Rscript exited with 1
+Command Line: Rscript -e tempLibDir = '/tmp/Rlib.17484945514140798493';source('/tmp/CNVPlottingLibrary.3041481449122730422.R');source('/tmp/PlotDenoisedCopyRatios.13463871478788987874.R'); --sample_name=HCC1143_tumor --standardized_copy_ratios_file=/home/mcollins/sandbox/hcc1143_T_clean.standardizedCR.tsv --denoised_copy_ratios_file=/home/mcollins/sandbox/hcc1143_T_clean.denoisedCR.tsv --contig_names=chr1CONTIG_DELIMITERchr2CONTIG_DELIMITERchr3CONTIG_DELIMITERchr4CONTIG_DELIMITERchr5CONTIG_DELIMITERchr6CONTIG_DELIMITERchr7CONTIG_DELIMITERchr8CONTIG_DELIMITERchr9CONTIG_DELIMITERchr10CONTIG_DELIMITERchr11CONTIG_DELIMITERchr12CONTIG_DELIMITERchr13CONTIG_DELIMITERchr14CONTIG_DELIMITERchr15CONTIG_DELIMITERchr16CONTIG_DELIMITERchr17CONTIG_DELIMITERchr18CONTIG_DELIMITERchr19CONTIG_DELIMITERchr20CONTIG_DELIMITERchr21CONTIG_DELIMITERchr22CONTIG_DELIMITERchrXCONTIG_DELIMITERchrY --contig_lengths=248956422CONTIG_DELIMITER242193529CONTIG_DELIMITER198295559CONTIG_DELIMITER190214555CONTIG_DELIMITER181538259CONTIG_DELIMITER170805979CONTIG_DELIMITER159345973CONTIG_DELIMITER145138636CONTIG_DELIMITER138394717CONTIG_DELIMITER133797422CONTIG_DELIMITER135086622CONTIG_DELIMITER133275309CONTIG_DELIMITER114364328CONTIG_DELIMITER107043718CONTIG_DELIMITER101991189CONTIG_DELIMITER90338345CONTIG_DELIMITER83257441CONTIG_DELIMITER80373285CONTIG_DELIMITER58617616CONTIG_DELIMITER64444167CONTIG_DELIMITER46709983CONTIG_DELIMITER50818468CONTIG_DELIMITER156040895CONTIG_DELIMITER57227415 --maximum_copy_ratio=4.0 --point_size_copy_ratio=0.2 --output_dir=/home/mcollins/sandbox/plots/ --output_prefix=hcc1143_T_clean
+Stdout: WARNING: unknown option '--sample_name=HCC1143_tumor'
+WARNING: unknown option '--standardized_copy_ratios_file=/home/mcollins/sandbox/hcc1143_T_clean.standardizedCR.tsv'
+WARNING: unknown option '--denoised_copy_ratios_file=/home/mcollins/sandbox/hcc1143_T_clean.denoisedCR.tsv'
+WARNING: unknown option '--contig_names=chr1CONTIG_DELIMITERchr2CONTIG_DELIMITERchr3CONTIG_DELIMITERchr4CONTIG_DELIMITERchr5CONTIG_DELIMITERchr6CONTIG_DELIMITERchr7CONTIG_DELIMITERchr8CONTIG_DELIMITERchr9CONTIG_DELIMITERchr10CONTIG_DELIMITERchr11CONTIG_DELIMITERchr12CONTIG_DELIMITERchr13CONTIG_DELIMITERchr14CONTIG_DELIMITERchr15CONTIG_DELIMITERchr16CONTIG_DELIMITERchr17CONTIG_DELIMITERchr18CONTIG_DELIMITERchr19CONTIG_DELIMITERchr20CONTIG_DELIMITERchr21CONTIG_DELIMITERchr22CONTIG_DELIMITERchrXCONTIG_DELIMITERchrY'
+WARNING: unknown option '--contig_lengths=248956422CONTIG_DELIMITER242193529CONTIG_DELIMITER198295559CONTIG_DELIMITER190214555CONTIG_DELIMITER181538259CONTIG_DELIMITER170805979CONTIG_DELIMITER159345973CONTIG_DELIMITER145138636CONTIG_DELIMITER138394717CONTIG_DELIMITER133797422CONTIG_DELIMITER135086622CONTIG_DELIMITER133275309CONTIG_DELIMITER114364328CONTIG_DELIMITER107043718CONTIG_DELIMITER101991189CONTIG_DELIMITER90338345CONTIG_DELIMITER83257441CONTIG_DELIMITER80373285CONTIG_DELIMITER58617616CONTIG_DELIMITER64444167CONTIG_DELIMITER46709983CONTIG_DELIMITER50818468CONTIG_DELIMITER156040895CONTIG_DELIMITER57227415'
+WARNING: unknown option '--maximum_copy_ratio=4.0'
+WARNING: unknown option '--point_size_copy_ratio=0.2'
+WARNING: unknown option '--output_dir=/home/mcollins/sandbox/plots/'
+WARNING: unknown option '--output_prefix=hcc1143_T_clean'
+Stderr: Error in library(optparse) : there is no package called ‘optparse’
+Calls: source -> withVisible -> eval -> eval -> library
+	at org.broadinstitute.hellbender.utils.R.RScriptExecutor.getScriptException(RScriptExecutor.java:79)
+	at org.broadinstitute.hellbender.utils.R.RScriptExecutor.getScriptException(RScriptExecutor.java:18)
+	at org.broadinstitute.hellbender.utils.runtime.ScriptExecutor.executeCuratedArgs(ScriptExecutor.java:112)
+	at org.broadinstitute.hellbender.utils.R.RScriptExecutor.exec(RScriptExecutor.java:125)
+	at org.broadinstitute.hellbender.tools.copynumber.plotting.PlotDenoisedCopyRatios.writeDenoisingPlots(PlotDenoisedCopyRatios.java:217)
+	at org.broadinstitute.hellbender.tools.copynumber.plotting.PlotDenoisedCopyRatios.doWork(PlotDenoisedCopyRatios.java:174)
+	at org.broadinstitute.hellbender.cmdline.CommandLineProgram.runTool(CommandLineProgram.java:150)
+	at org.broadinstitute.hellbender.cmdline.CommandLineProgram.instanceMainPostParseArgs(CommandLineProgram.java:203)
+	at org.broadinstitute.hellbender.cmdline.CommandLineProgram.instanceMain(CommandLineProgram.java:222)
+	at org.broadinstitute.hellbender.Main.runCommandLineProgram(Main.java:166)
+	at org.broadinstitute.hellbender.Main.mainEntry(Main.java:209)
+	at org.broadinstitute.hellbender.Main.main(Main.java:306)
