@@ -1,4 +1,4 @@
-(main) [mcollins@compute02 bams]$ ls
+ls
 AG12-NB1.bam       AG12-TTP1.bam.bai       AUR-AER6-TTM6.bam      AUR-AFE4-TTM4.bam.bai
 AG12-NB1.bam.bai   AUR-AER6-TTM10.bam      AUR-AER6-TTM6.bam.bai  AUR-AFE4-TTM6.bam
 AG12-TTM1.bam      AUR-AER6-TTM10.bam.bai  AUR-AER6-TTM9.bam      AUR-AFE4-TTM6.bam.bai
@@ -7,17 +7,80 @@ AG12-TTP1.bam      AUR-AER6-TTM2.bam.bai   AUR-AFE4-TTM4.bam      temp-000000
 
 gatk PreprocessIntervals -R /data4/wheeler_shared/reference/Broad/Homo_sapiens_assembly38_noALT_noHLA_noDecoy.fasta.gz --bin-length 0 --interval-merging-rule OVERLAPPING_ONLY -O sandbox2/targets_C.preprocessed.interval_list
 
+#READ COUNTS FOR AG12-NB1
 gatk CollectReadCounts -I /data4/wheeler_shared/data_files/Aurora_US/bams/AG12-NB1.bam -L sandbox2/targets_C.preprocessed.interval_list --interval-merging-rule OVERLAPPING_ONLY -O sandbox2/Anorm.counts.hdf5
 
+#PoN MADE FROM AG12-NB1
 gatk --java-options "-Xmx6500m" CreateReadCountPanelOfNormals -I sandbox2/Anorm.counts.hdf5 --minimum-interval-median-percentile 5.0 -O sandbox2/ANpon.pon.hdf5
 
+#AG12-NB1 TSV FILES
 gatk --java-options "-Xmx12g" DenoiseReadCounts \
     -I sandbox2/Anorm.counts.hdf5 \
     --count-panel-of-normals sandbox2/ANpon.pon.hdf5 \
     --standardized-copy-ratios sandbox2/AG12NB1.standardizedCR.tsv \
     --denoised-copy-ratios sandbox2/AG12NB1.denoisedCR.tsv
 
+#TRIED TO PLOT GRAPHS, REQUIRES OPTPARSE PACKAGE
 gatk PlotDenoisedCopyRatios --standardized-copy-ratios AG12NB1.standardizedCR.tsv --denoised-copy-ratios AG12NB1.denoisedCR.tsv --sequence-dictionary /data4/wheeler_shared/data_files/GATK_Tutorial/tutorial_11682/Homo_sapiens_assembly38.dict --minimum-contig-length 46709983 --output plots --output-prefix AG12NB1
 
-#Stderr: Error in library(optparse) : there is no package called ‘optparse’
+Stderr: Error in library(optparse) : there is no package called ‘optparse’
+
+module avail R                  
+module load R/R-4.0.2
+R
+install.packages("optparse", lib="~/R/library")
+q()
+
+#REQUIRES DATA.TABLE R PACKAGE
+gatk PlotDenoisedCopyRatios --standardized-copy-ratios sandbox/hcc1143_T_clean.standardizedCR.tsv --denoised-copy-ratios sandbox/hcc1143_T_clean.denoisedCR.tsv --sequence-dictionary /data4/wheeler_shared/data_files/GATK_Tutorial/tutorial_11682/Homo_sapiens_assembly38.dict --minimum-contig-length 46709983 --output sandbox/plots --output-prefix hcc1143_T_clean
+
+Stderr: Error in library(data.table) : there is no package called ‘data.table’
+
+#Attempted to install data.table
+module avail R                  
+module load R/R-4.0.2
+R
+install.packages("data.table", lib="~/R/library")
+
+/opt/ohpc/pub/apps/R/R-4.0.2/lib64/R/bin/exec/R: /opt/ohpc/pub/apps/gcc/10.3.1/lib64/libgomp.so.1: no version information available (required by /opt/ohpc/pub/apps/R/R-4.0.2/lib64/R/lib/libR.so)
+/opt/ohpc/pub/apps/R/R-4.0.2/lib64/R/bin/exec/R: /opt/ohpc/pub/apps/gcc/10.3.1/lib64/libgomp.so.1: no version information available (required by /opt/ohpc/pub/apps/R/R-4.0.2/lib64/R/lib/libR.so)
+/opt/ohpc/pub/apps/R/R-4.0.2/lib64/R/bin/exec/R: /opt/ohpc/pub/apps/gcc/10.3.1/lib64/libstdc++.so.6: no version information available (required by /usr/lib64/libicuuc.so.50)
+/opt/ohpc/pub/apps/R/R-4.0.2/lib64/R/bin/exec/R: /opt/ohpc/pub/apps/gcc/10.3.1/lib64/libstdc++.so.6: no version information available (required by /usr/lib64/libicuuc.so.50)
+/opt/ohpc/pub/apps/R/R-4.0.2/lib64/R/bin/exec/R: /opt/ohpc/pub/apps/gcc/10.3.1/lib64/libstdc++.so.6: no version information available (required by /usr/lib64/libicui18n.so.50)
+/opt/ohpc/pub/apps/R/R-4.0.2/lib64/R/bin/exec/R: /opt/ohpc/pub/apps/gcc/10.3.1/lib64/libstdc++.so.6: no version information available (required by /usr/lib64/libicui18n.so.50)
+* installing *source* package ‘data.table’ ...
+** package ‘data.table’ successfully unpacked and MD5 sums checked
+** using staged installation
+gcc 10.3.1
+zlib 1.2.7 is available ok
+* checking if R installation supports OpenMP without any extra hints... no
+* checking if R installation supports openmp with "-fopenmp" flag... no
+***
+*** OpenMP not supported! data.table uses OpenMP to automatically
+***   parallelize operations like sorting, grouping, file reading, etc.
+*** For details on how to install the necessary toolchains on your OS see:
+***   https://github.com/Rdatatable/data.table/wiki/Installation
+*** Continuing installation without OpenMP support...
+***
+** libs
+gcc -I"/opt/ohpc/pub/apps/R/R-4.0.2/lib64/R/include" -DNDEBUG   -I/usr/local/include  -fvisibility=hidden     -fpic  -g -O2  -c assign.c -o assign.o
+/opt/ohpc/pub/apps/gcc/10.3.1/bin/../libexec/gcc/x86_64-pc-linux-gnu/10.3.1/cc1: error while loading shared libraries: libmpfr.so.6: cannot open shared object file: No such file or directory
+make: *** [assign.o] Error 1
+ERROR: compilation failed for package ‘data.table’
+* removing ‘/home/mcollins/R/library/data.table’
+The downloaded source packages are in
+	‘/tmp/RtmpHfosJh/downloaded_packages’
+Warning message:
+In install.packages("data.table", lib = "~/R/library") :
+  installation of package ‘data.table’ had non-zero exit status
+
+#READ COUNTS FOR AG12-TTM1.bam
+gatk CollectReadCounts -I /data4/wheeler_shared/data_files/Aurora_US/bams/AG12-TTM1.bam -L sandbox2/targets_C.preprocessed.interval_list --interval-merging-rule OVERLAPPING_ONLY -O sandbox2/AG12TTM1.counts.hdf5
+
+#AG12-TTM1 TSV FILES USING PoN MADE FROM AG12-NB1
+gatk --java-options "-Xmx12g" DenoiseReadCounts \
+    -I sandbox2/AG12TTM1.counts.hdf5 \
+    --count-panel-of-normals sandbox2/ANpon.pon.hdf5 \
+    --standardized-copy-ratios sandbox2/AG12TTM1.standardizedCR.tsv \
+    --denoised-copy-ratios sandbox2/AG12TTM1.denoisedCR.tsv
 
