@@ -1,0 +1,23 @@
+(main) [mcollins@compute02 bams]$ ls
+AG12-NB1.bam       AG12-TTP1.bam.bai       AUR-AER6-TTM6.bam      AUR-AFE4-TTM4.bam.bai
+AG12-NB1.bam.bai   AUR-AER6-TTM10.bam      AUR-AER6-TTM6.bam.bai  AUR-AFE4-TTM6.bam
+AG12-TTM1.bam      AUR-AER6-TTM10.bam.bai  AUR-AER6-TTM9.bam      AUR-AFE4-TTM6.bam.bai
+AG12-TTM1.bam.bai  AUR-AER6-TTM2.bam       AUR-AER6-TTM9.bam.bai  aurora_downloader.py
+AG12-TTP1.bam      AUR-AER6-TTM2.bam.bai   AUR-AFE4-TTM4.bam      temp-000000
+
+gatk PreprocessIntervals -R /data4/wheeler_shared/reference/Broad/Homo_sapiens_assembly38_noALT_noHLA_noDecoy.fasta.gz --bin-length 0 --interval-merging-rule OVERLAPPING_ONLY -O sandbox2/targets_C.preprocessed.interval_list
+
+gatk CollectReadCounts -I /data4/wheeler_shared/data_files/Aurora_US/bams/AG12-NB1.bam -L sandbox2/targets_C.preprocessed.interval_list --interval-merging-rule OVERLAPPING_ONLY -O sandbox2/Anorm.counts.hdf5
+
+gatk --java-options "-Xmx6500m" CreateReadCountPanelOfNormals -I sandbox2/Anorm.counts.hdf5 --minimum-interval-median-percentile 5.0 -O sandbox2/ANpon.pon.hdf5
+
+gatk --java-options "-Xmx12g" DenoiseReadCounts \
+    -I sandbox2/Anorm.counts.hdf5 \
+    --count-panel-of-normals sandbox2/ANpon.pon.hdf5 \
+    --standardized-copy-ratios sandbox2/AG12NB1.standardizedCR.tsv \
+    --denoised-copy-ratios sandbox2/AG12NB1.denoisedCR.tsv
+
+gatk PlotDenoisedCopyRatios --standardized-copy-ratios AG12NB1.standardizedCR.tsv --denoised-copy-ratios AG12NB1.denoisedCR.tsv --sequence-dictionary /data4/wheeler_shared/data_files/GATK_Tutorial/tutorial_11682/Homo_sapiens_assembly38.dict --minimum-contig-length 46709983 --output plots --output-prefix AG12NB1
+
+#Stderr: Error in library(optparse) : there is no package called ‘optparse’
+
