@@ -1,0 +1,71 @@
+gatk PreprocessIntervals -R hs38DH.fa --bin-length 0 --interval-merging-rule OVERLAPPING_ONLY -O sandbox/targets_C.preprocessed.interval_list
+
+#READ COUNTS FOR AG12-NB1 
+gatk CollectReadCounts -I normal.bam -L sandbox/targets_C.preprocessed.interval_list --interval-merging-rule OVERLAPPING_ONLY -O sandbox/normal.counts.hdf5
+
+#READ COUNTS FOR AG12-TTM1.bam
+gatk CollectReadCounts -I tumor.bam -L sandbox/targets_C.preprocessed.interval_list --interval-merging-rule OVERLAPPING_ONLY -O sandbox/tumor.counts.hdf5
+
+#PoN MADE FROM AG12-NB1
+gatk --java-options "-Xmx6500m" CreateReadCountPanelOfNormals -I sandbox/normal.counts.hdf5 --minimum-interval-median-percentile 5.0 -O sandbox/ANpon.pon.hdf5
+
+#SBATCH --job-name=GATK         # create a short name for your job
+#SBATCH --nodes=1                # Number of nodes for this job
+#SBATCH --ntasks=1               # total number of tasks across all nodes
+#SBATCH --cpus-per-task=1        # cpu-cores per task (>1 if multi-threaded tasks)
+#SBATCH --mem=16G                # memory to allocate per compute node.
+#SBATCH --time=48:00:00          # total run time limit (HH:MM:SS)
+#SBATCH --mail-type=ALL          # send email for all events
+#SBATCH --mail-user= 
+
+#Metastatic tumour allelic counts AG12-TTM1 
+gatk --java-options "-Xmx15g" CollectAllelicCounts \
+    -L Exome.bed \
+    -I tumor.bam \
+    -R hs38DH.fa \
+    -O sandbox/tumor.allelicCounts.tsv
+
+#Normal blood allelic counts AG12-NB1
+gatk --java-options "-Xmx15g" CollectAllelicCounts \
+    -L Exome.bed \
+    -I normal.bam \
+    -R hs38DH.fa \
+    -O sandbox/normal.allelicCounts.tsv
+
+gatk --java-options "-Xmx12g" DenoiseReadCounts \
+    -I sandbox3/tumor.counts.hdf5 \
+    --count-panel-of-normals ANpon.pon.hdf5 \
+    --standardized-copy-ratios sandbox/tumor.standardizedCR.tsv \
+    --denoised-copy-ratios sandbox/tumor.denoisedCR.tsv
+
+#SBATCH --job-name=GATK         # create a short name for your job
+#SBATCH --nodes=1                # Number of nodes for this job
+#SBATCH --ntasks=1               # total number of tasks across all nodes
+#SBATCH --cpus-per-task=1        # cpu-cores per task (>1 if multi-threaded tasks)
+#SBATCH --mem= 32G                # memory to allocate per compute node.
+#SBATCH --time=48:00:00          # total run time limit (HH:MM:SS)
+#SBATCH --mail-type=ALL          # send email for all events
+#SBATCH --mail-user= 
+
+gatk --java-options "-Xmx31g" ModelSegments \
+    --denoised-copy-ratios sandbox/tumor.denoisedCR.tsv \
+    --allelic-counts sandbox/tumor.allelicCounts.tsv \
+    --normal-allelic-counts sandbox3/normal.allelicCounts.tsv \
+    --output sandbox/sandbox2 \
+    --output-prefix 
+
+gatk --java-options "-Xmx31g" ModelSegments \
+    --denoised-copy-ratios sandbox/normal.denoisedCR.tsv \
+    --allelic-counts sandbox/normal.allelicCounts.tsv \
+    --output sandbox/sandbox2 \
+    --output-prefix
+Elapsed time: 4.74 minutes.
+
+gatk CallCopyRatioSegments \
+--I sandbox/sandbox2/tumor_clean.cr.seg \
+–-O sandbox/sandbox2/tumor_clean.called.seg
+
+gatk CallCopyRatioSegments \
+--I sandbox/sandbox2/normal.cr.seg \
+–-O sandbox/sandbox2/normal.called.seg
+
