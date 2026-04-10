@@ -1,0 +1,8 @@
+rule all: 
+	input:
+
+
+#RULES
+
+include: "rules/.smk"
+include "rules/.smk"
