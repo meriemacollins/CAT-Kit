@@ -18,7 +18,7 @@
   #      'http://dohlee-bio.info:9193/gatk/reference/create_sequence_dictionary'
 
 #If you have fasta and from WGS (bins)
-rule preprocess_interval:
+rule preprocess_interval_WGS:
     input:
         reference = '.fasta'
     output:
@@ -39,7 +39,7 @@ rule preprocess_interval:
           -O preprocessed_intervals.interval_list
 
 #if you have fasta and from WES (padding)
-rule preprocess_interval:
+rule preprocess_interval_WES:
     input:
         reference = '.fasta'
     output:
@@ -63,7 +63,7 @@ rule preprocess_interval:
 
 #Normal
 #If you have normal BAM and interval list then run
-rule collectreadcounts:
+rule collectreadcounts_norm:
     input:
         bam=["mapped/a.bam"],
         intervals=["a.interval_list"],
@@ -82,7 +82,7 @@ rule collectreadcounts:
 
 #Tumor
 #If you have tumor BAM and interval list then run
-rule collectreadcounts:
+rule collectreadcounts_tumor:
     input:
         bam=["mapped/a.bam"],
         intervals=["a.interval_list"],
