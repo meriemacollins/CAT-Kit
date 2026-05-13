@@ -1,42 +1,44 @@
+#createfoldersneededforoutputsofsubsequentsteps
 
 #rule createworkspace:
-    #output:
+	#output:
 
-#If you have reference fasta create sequencing dictionary
-#rule create_sequence_dictionary:
-  #  input:
- #       '{reference}.fasta'
-  #  output:
- #       '{reference}.fasta.dict'
+#If you have a reference fasta create sequencing dictionary
+#rule create_dict:
+ #   input:
+        "genome.fasta",
+ #   output:
+        "genome.dict",
+ #   log:
+        "logs/picard/create_dict.log",
  #   params:
-        # Optional parameters. Omit if unused.
- #       java_options = '-Xmx4g'
- #   threads: 1
- #   resources: RAM = 4
- #   log: 'logs/gatk/create-sequence-dictionary/{reference}.log'
- #   wrapper:
-  #      'http://dohlee-bio.info:9193/gatk/reference/create_sequence_dictionary'
+ #       extra="",  # optional: extra arguments for picard.
+    # optional specification of memory usage of the JVM that snakemake will respect with global
+    # resource restrictions (https://snakemake.readthedocs.io/en/latest/snakefiles/rules.html#resources)
+    # and which can be used to request RAM during cluster job submission as `{resources.mem_mb}`:
+    # https://snakemake.readthedocs.io/en/latest/executing/cluster.html#job-properties
+ #   resources:
+        mem_mb=1024,
+#  	threads=1, 
+#   wrapper:
+        "v6.1.1/bio/picard/createsequencedictionary"
 
-#If you have fasta and from WGS (bins)
+#If you have fasta and from WGS (bins), pass reference genome to -R
 rule preprocess_interval_WGS:
     input:
-        reference = '.fasta'
+        reference = '{sample}.fasta'
     output:
-        '.intervals.list'
+        '{sample}.intervals.list'
     params:
-        #extra = '',
-        #interval_list = '',
-        bin_length = '1000',
+        bin_length = 1000,
     threads: 1
     log: 'logs/gatk/preprocess-interval/preprocessed.intervals.list.log'
-    wrapper:
-        'http://dohlee-bio.info:9193/gatk/intervals/preprocess-intervals'
-
-     gatk PreprocessIntervals \
-          -R reference.fa \
-          --bin-length 1000 \
-          --padding 0 \
-          -O preprocessed_intervals.interval_list
+    shell:
+	"gatk PreprocessIntervals "
+         "-R {input.reference} "
+         "--bin-length {params.bin_length}"
+         "--padding 0"
+         "-O {output}"
 
 #if you have fasta and from WES (padding)
 rule preprocess_interval_WES:
@@ -50,15 +52,13 @@ rule preprocess_interval_WES:
         padding = '250',
     threads: 1
     log: 'logs/gatk/preprocess-interval/preprocessed.intervals.list.log'
-    wrapper:
-        'http://dohlee-bio.info:9193/gatk/intervals/preprocess-intervals'
-
-     gatk PreprocessIntervals \
-          -R reference.fa \
-          -L intervals.interval_list \
-          --bin-length 0 \
-          --padding 250 \
-          -O preprocessed_intervals.interval_list
+    shell(
+    	"gatk --java-options '{java_opts}' PreprocessIntervals"
+    	" -R {input.reference}"
+   	" -L {input-intervals}"
+    	" --bin-length 0"
+        " --padding 250"
+        " -O preprocessed_intervals.interval_list
 
 
 #Normal
