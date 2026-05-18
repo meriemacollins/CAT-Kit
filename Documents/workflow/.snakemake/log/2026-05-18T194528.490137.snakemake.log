@@ -1,0 +1,14 @@
+Lints for rule preprocess_interval_WGS (line 2, /Users/maia/Documents/workflow/rules/Preprocess.smk):
+    * Specify a conda environment or container for each rule.:
+      This way, the used software for each specific step is documented, and the workflow can be executed on any machine without prerequisites.
+      Also see:
+      https://snakemake.readthedocs.io/en/latest/snakefiles/deployment.html#integrated-package-management
+      https://snakemake.readthedocs.io/en/latest/snakefiles/deployment.html#running-jobs-in-containers
+
+Lints for rule preprocess_interval_WES (line 21, /Users/maia/Documents/workflow/rules/Preprocess.smk):
+    * Specify a conda environment or container for each rule.:
+      This way, the used software for each specific step is documented, and the workflow can be executed on any machine without prerequisites.
+      Also see:
+      https://snakemake.readthedocs.io/en/latest/snakefiles/deployment.html#integrated-package-management
+      https://snakemake.readthedocs.io/en/latest/snakefiles/deployment.html#running-jobs-in-containers
+

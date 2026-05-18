@@ -7,6 +7,8 @@ rule collectalleliccounts_normal:
         ref="ref/genome.fasta"
     output:
         counts="a.counts.tsv",
+    conda:
+        "envs/gatk.yml"
     log:
         "logs/gatk/collectalleliccounts.log",
     threads: 1
@@ -26,14 +28,16 @@ rule collectalleliccounts_tumor:
         intervals=["a.interval_list"],
         ref="ref/genome.fasta"
     output:
-        counts="a.counts.tsv",
+        counts="a.counts.tsv"
+    conda:
+        "envs/gatk.yml"
     log:
-        "logs/gatk/collectalleliccounts.log",
+        "logs/gatk/collectalleliccounts.log"
     threads: 1
     params:
         extra="",  # optional
-        java_opts="",  # optional
+        java_opts=""  # optional
     resources:
-        mem_mb=1024,
+        mem_mb=1024
     wrapper:
         "v7.6.0/bio/gatk/collectalleliccounts"
