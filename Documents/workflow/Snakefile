@@ -4,5 +4,5 @@ rule all:
 
 #RULES
 
-include: "rules/.smk"
-include "rules/.smk"
+#include: "rules/.smk"
+#include: "rules/.smk"
