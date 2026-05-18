@@ -1,0 +1,11 @@
+
+#where the files are 
+
+
+fasta: "data/reference.fa"
+
+intervals: "path/to/.bed/file"
+
+bam: "data/bams/.bam"
+
+
