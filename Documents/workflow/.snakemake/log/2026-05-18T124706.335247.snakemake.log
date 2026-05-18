@@ -1,0 +1,23 @@
+Assuming unrestricted shared filesystem usage.
+host: MAC.station
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Job stats:
+job      count
+-----  -------
+all          1
+total        1
+
+Select jobs to execute...
+Execute 1 jobs...
+[Mon May 18 12:47:07 2026]
+localrule all:
+    jobid: 0
+    reason: Rules with neither input nor output files are always executed.
+    resources: tmpdir=/var/folders/js/47lf8p8j62932tb9qj2cpp7r0000gn/T
+[Mon May 18 12:47:07 2026]
+Finished jobid: 0 (Rule: all)
+1 of 1 steps (100%) done
+Complete log(s): /Users/maia/Documents/workflow/.snakemake/log/2026-05-18T124706.335247.snakemake.log

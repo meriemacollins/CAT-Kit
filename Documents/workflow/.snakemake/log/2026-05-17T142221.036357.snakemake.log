@@ -1,0 +1,3 @@
+SyntaxError in file "/Users/maia/Documents/workflow/Snakefile", line 5:
+Colon expected after keyword include.:
+None

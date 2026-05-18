@@ -1,3 +1,5 @@
+configfile: "config/config.yml"
+
 rule all: 
 	input:
 

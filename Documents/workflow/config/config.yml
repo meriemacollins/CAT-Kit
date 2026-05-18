@@ -1,4 +1,6 @@
 
+#where the files are 
+
 fasta: "/path/to/fasta"
 
 intervals: "path/to/.bed/file"
