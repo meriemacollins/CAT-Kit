@@ -1,6 +1,6 @@
 #Normal
 #If you have BAM, interval list and fasta then run
-rule collectalleliccounts:
+rule collectalleliccounts_normal:
     input:
         bam=["mapped/a.bam"],
         intervals=["a.interval_list"],
@@ -20,7 +20,7 @@ rule collectalleliccounts:
 
 #Tumor
 #If you have BAM, interval list and fasta then run
-rule collectalleliccounts:
+rule collectalleliccounts_tumor:
     input:
         bam=["mapped/a.bam"],
         intervals=["a.interval_list"],

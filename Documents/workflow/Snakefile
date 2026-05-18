@@ -1,10 +1,16 @@
-configfile: "config/config.yml"
+configfile: "config/config.yaml"
 
-rule all: 
-	input:
+#Final output files
+
+#rule all: 
+#	input:
 
 
 #RULES
 
-#include: "rules/.smk"
-#include: "rules/.smk"
+include: "rules/Preprocess.smk"
+include: "rules/Collectreadcounts.smk"
+include: "rules/Denoisereadcounts.smk"
+include: "rules/Collectalleliccounts.smk"
+include: "rules/Modelandcall.smk"
+
