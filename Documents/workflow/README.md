@@ -14,22 +14,39 @@ dependencies:
 
 
 ├── config
+
 │   └── config.yaml
+
 ├── data
+
 │   ├── bams
+
 │   └── reference
+
 ├── envs
+
 │   └── gatk.yml
+
 ├── logs
+
 ├── output
+
 ├── rules
+
 │   ├── Collectalleliccounts.smk
+
 │   ├── Collectreadcounts.smk
+
 │   ├── Denoisereadcounts.smk
+
 │   ├── Modelandcall.smk
+
 │   └── Preprocess.smk
+
 ├── README.md
+
 ├── slurm.yaml
+
 └── Snakefile
 
 
