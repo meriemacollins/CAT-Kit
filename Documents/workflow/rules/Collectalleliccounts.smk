@@ -2,15 +2,15 @@
 #If you have BAM, interval list and fasta then run
 rule collectalleliccounts_normal:
     input:
-        bam=["mapped/a.bam"],
-        intervals=["a.interval_list"],
-        ref="ref/genome.fasta"
+        bam = "data/bams/normal/{sample}.bam",
+        intervals= "output/preprocessedintervals.list",
+        reference = "data/reference/reference.fa"
     output:
-        counts="a.counts.tsv",
+        counts="output/{sample}.normal_alleliccounts.tsv"
     conda:
         "envs/gatk.yml"
     log:
-        "logs/gatk/collectalleliccounts.log",
+        "logs/gatk/{sample}.collectalleliccountsnormal.log"
     threads: 1
     params:
         extra="",  # optional
@@ -24,15 +24,15 @@ rule collectalleliccounts_normal:
 #If you have BAM, interval list and fasta then run
 rule collectalleliccounts_tumor:
     input:
-        bam=["mapped/a.bam"],
-        intervals=["a.interval_list"],
-        ref="ref/genome.fasta"
+        bam = "data/bams/tumor/{sample}.bam",
+        intervals = "output/preprocessedintervals.list",
+        reference = "data/reference/reference.fa"
     output:
-        counts="a.counts.tsv"
+        counts="output/{sample}.tumor_alleliccounts.tsv"
     conda:
         "envs/gatk.yml"
     log:
-        "logs/gatk/collectalleliccounts.log"
+        "logs/gatk/{sample}.collectalleliccountstumor.log"
     threads: 1
     params:
         extra="",  # optional

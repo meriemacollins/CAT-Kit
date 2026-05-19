@@ -2,12 +2,12 @@
 #If you have normal BAM and interval list then run
 rule collectreadcounts_norm:
     input:
-        bam = "mapped/a.bam",
-        intervals = "a.interval_list",
+        bam = "data/bams/normal/{sample}.bam",
+        intervals = "output/preprocessedintervals.list"
     output:
-        counts="a.counts.hdf5",
+        counts="output/{sample}.normal_counts.hdf5"
     log:
-        "logs/gatk/collectreadcounts.log",
+        "logs/gatk/{sample}.collectreadcountsnormal.log"
     threads: 1
     params:
         extra="",  # optional
@@ -21,12 +21,12 @@ rule collectreadcounts_norm:
 #If you have tumor BAM and interval list then run
 rule collectreadcounts_tumor:
     input:
-        bam=["mapped/a.bam"],
-        intervals=["a.interval_list"],
+        bam = "data/bams/tumor/{sample}.bam",
+        intervals ="output/preprocessedintervals.list"
     output:
-        counts="a.counts.hdf5",
+        counts="output/{sample}.tumor_counts.hdf5"
     log:
-        "logs/gatk/collectreadcounts.log",
+        "logs/gatk/{sample}.collectreadcountstumor.log"
     threads: 1
     params:
         extra="",  # optional

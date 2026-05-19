@@ -4,8 +4,11 @@
 
 fasta: "data/reference.fa"
 
-intervals: "path/to/.bed/file"
+intervals: "data/reference/.bed"
 
-bam: "data/bams/.bam"
+normal_bam_dir: "data/bams/normal/.bam"
+
+tumor_bam_dir: "data/bams/tumor/.bam"
+
 
 

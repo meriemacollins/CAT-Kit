@@ -1,9 +1,22 @@
 configfile: "config/config.yaml"
 
-#Final output files
 
-#rule all: 
-#	input:
+
+##SAMPLES
+NORMAL_SAMPLES, = glob_wildcards("data/bams/normal/{sample}.bam")
+TUMOR_SAMPLES, = glob_wildcards("data/bams/tumor/{sample}.bam")
+
+#Final output files
+rule all: 
+    input: 
+        "output/preprocessedintervals.list"
+        expand("output/{sample}.normal_counts.hdf5", sample=NORMAL_SAMPLES),
+        expand("output/{sample}.tumor_counts.hdf5", sample=TUMOR_SAMPLES),
+        "output/pon.hdf5"
+        expand("output/{sample}.standardizedCR.tsv", sample=TUMOR_SAMPLES)
+        expand("output/{sample}.denoisedCR.tsv", sample=TUMOR_SAMPLES)
+        expand("output/{sample}.normal_alleliccounts.tsv", sample=NORMAL_SAMPLES)
+        expand("output/{sample}.tumor_alleliccounts.tsv", sample=TUMOR_SAMPLES)
 
 
 #RULES
