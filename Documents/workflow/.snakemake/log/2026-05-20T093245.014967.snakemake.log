@@ -1,9 +1,0 @@
-Assuming unrestricted shared filesystem usage.
-host: Maias-MacBook-Air.local
-Building DAG of jobs...
-MissingInputException in rule collectreadcounts_tumor in file "/Users/maia/Documents/workflow/rules/Collectreadcounts.smk", line 22:
-Missing input files for rule collectreadcounts_tumor:
-    output: output/output/AUR-AG12-TTM1.tumor_counts.hdf5
-    wildcards: sample=output/AUR-AG12-TTM1
-    affected files:
-        data/bams/tumor/output/AUR-AG12-TTM1.bam

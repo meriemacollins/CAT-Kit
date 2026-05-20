@@ -1,3 +1,0 @@
-WorkflowError:
-Failed to open source file /Users/maia/Documents/workflow/rules
-IsADirectoryError: [Errno 21] Is a directory: '/Users/maia/Documents/workflow/rules'
