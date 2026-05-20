@@ -1,0 +1,8 @@
+data/
+output/
+logs/
+*.fa*
+*.FA*
+*.ba*
+*.BA*
+*.bed
