@@ -1,6 +1,6 @@
 #Normal
 #If you have normal BAM and interval list then run
-rule collectreadcounts_norm:
+rule collectreadcounts_normal:
     input:
         bam = "data/bams/normal/{sample}.bam",
         intervals = "output/preprocessedintervals.list"

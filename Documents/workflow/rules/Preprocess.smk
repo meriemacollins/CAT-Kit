@@ -1,13 +1,13 @@
 #If you have fasta and from WGS (bins), pass reference genome to -R
 rule preprocess_interval_WGS:
     input:
-        reference = 'data/reference/reference.fa'
+        reference = "data/reference/reference.fa"
     output:
-        interval = 'output/preprocessedintervals.list'
+        interval = "output/preprocessedintervals.list"
     conda:
         "envs/gatk.yml"
     params:
-        bin_length = 1000
+        bin_length = 1000 #user must be able to specify 
     threads: 1
     log:
         "logs/gatk/preprocess-interval/preprocessedintervals.log"
@@ -25,12 +25,12 @@ rule preprocess_interval_WES:
         reference = 'data/reference/reference.fa',
         intervals = 'data/reference/intervals.bed'
     output:
-        interval = 'output/.preprocessedintervals.list'
+        interval = "output/preprocessedintervals.list"
     conda:
         "envs/gatk.yml"
     params:
         padding = '250',
-        java_opts = '-Xmx4g'
+        java_opts = '-Xmx4g' #user must be able to specify 
     threads: 1
     log:
         "logs/gatk/preprocess-interval/preprocessedintervals.log"

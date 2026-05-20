@@ -1,14 +1,4 @@
-
-#where the files are 
-
-
-fasta: "data/reference.fa"
-
-intervals: "data/reference/.bed"
-
-normal_bam_dir: "data/bams/normal/.bam"
-
-tumor_bam_dir: "data/bams/tumor/.bam"
-
-
-
+fasta: "data/reference/hs38DH.fa"
+intervals: "data/reference/intervals.bed"
+normal_bam_dir: "data/bams/normal/"
+tumor_bam_dir: "data/bams/tumor/"
