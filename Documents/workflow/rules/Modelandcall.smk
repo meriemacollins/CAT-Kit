@@ -1,14 +1,14 @@
 #If you have
 rule modelsegments_denoise_input:
     input:
-        denoised_copy_ratios="a.denoisedCR.tsv"
+        denoised_copy_ratio="output/{sample}.denoisedCR.tsv"
     output:
-        "a.den.modelFinal.seg",
-        "a.n.cr.seg"
+        "output/{sample}.den.modelFinal.seg",
+        copy_ratio_seg="output/{sample}.n.cr.seg"
     conda:
         "envs/gatk.yml"
     log:
-        "logs/gatk/modelsegments_denoise.log"
+        "logs/gatk/modelsegments_denoise_{sample}.log"
     threads: 1
     params:
         #prefix="a.den.test",
@@ -21,14 +21,14 @@ rule modelsegments_denoise_input:
 
 rule call_copy_ratio_segments:
     input:
-        copy_ratio_seg="a.cr.seg"
+        copy_ratio_seg="output/{sample}.n.cr.seg"
     output:
-        called_copy_ratio_seg="a.called.seg",
-        igv_seg="a.called.igv.seg"
+        called_copy_ratio_seg="output/{sample}.called.seg",
+        igv_seg="output/{sample}.called.igv.seg"
     conda:
         "envs/gatk.yml"
     log:
-        "logs/gatk/call_copy_ratio_segments.log"
+        "logs/gatk/call_copy_ratio_segments_{sample}.log"
     threads: 1
     params:
         #prefix="a.den.test",

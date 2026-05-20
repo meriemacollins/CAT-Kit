@@ -1,0 +1,43 @@
+Full Traceback (most recent call last):
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/cli.py", line 2220, in args_to_api
+    dag_api = workflow_api.dag(
+        dag_settings=DAGSettings(
+    ...<17 lines>...
+        ),
+    )
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/api.py", line 356, in dag
+    return DAGApi(
+        self.snakemake_api,
+        self,
+        dag_settings=dag_settings,
+    )
+  File "<string>", line 6, in __init__
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/api.py", line 462, in __post_init__
+    self.workflow_api._workflow.dag_settings = self.dag_settings
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/api.py", line 408, in _workflow
+    workflow.include(
+    ~~~~~~~~~~~~~~~~^
+        self.snakefile, overwrite_default_target=True, print_compilation=False
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/workflow.py", line 1674, in include
+    exec(
+    ~~~~^
+        compile(code, snakefile.get_path_or_uri(secret_free=True), "exec"),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.globals,
+        ^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/maia/Documents/workflow/Snakefile", line 30, in <module>
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/workflow.py", line 1675, in include
+    compile(code, snakefile.get_path_or_uri(secret_free=True), "exec"),
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/maia/Documents/workflow/rules/Collectreadcounts.smk", line 51
+SyntaxError: keyword argument repeated: sample
+
+SyntaxError in file "/Users/maia/Documents/workflow/rules/Collectreadcounts.smk", line 25:
+keyword argument repeated: sample:
+None

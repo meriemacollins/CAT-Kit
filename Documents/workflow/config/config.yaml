@@ -1,4 +1,10 @@
 fasta: "data/reference/hs38DH.fa"
-intervals: "data/reference/intervals.bed"
+intervals: "data/reference/Aurora_US.Exome_2019.bed"
 normal_bam_dir: "data/bams/normal/"
 tumor_bam_dir: "data/bams/tumor/"
+
+#specify parameters for preprocess interval list 
+seq_type: "WES"
+bin_length: "1000"
+padding: "250"
+java_opts: "-Xmx4g"

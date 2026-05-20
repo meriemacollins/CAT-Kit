@@ -4,7 +4,7 @@ rule collectalleliccounts_normal:
     input:
         bam = "data/bams/normal/{sample}.bam",
         intervals= "output/preprocessedintervals.list",
-        reference = "data/reference/reference.fa"
+        reference = "data/reference/hs38DH.fa"
     output:
         counts="output/{sample}.normal_alleliccounts.tsv"
     conda:
@@ -26,7 +26,7 @@ rule collectalleliccounts_tumor:
     input:
         bam = "data/bams/tumor/{sample}.bam",
         intervals = "output/preprocessedintervals.list",
-        reference = "data/reference/reference.fa"
+        reference = "data/reference/hs38DH.fa"
     output:
         counts="output/{sample}.tumor_alleliccounts.tsv"
     conda:

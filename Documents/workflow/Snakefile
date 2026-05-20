@@ -1,5 +1,9 @@
 configfile: "config/config.yaml"
 
+wildcard_constraints:
+    sample="[^/]+"
+
+
 NORMAL_SAMPLES, = glob_wildcards("data/bams/normal/{sample}.bam")
 TUMOR_SAMPLES, = glob_wildcards("data/bams/tumor/{sample}.bam")
 
@@ -12,8 +16,12 @@ rule all:
         expand("output/{sample}.standardizedCR.tsv", sample=TUMOR_SAMPLES),
         expand("output/{sample}.denoisedCR.tsv", sample=TUMOR_SAMPLES),
         expand("output/{sample}.normal_alleliccounts.tsv", sample=NORMAL_SAMPLES),
-        expand("output/{sample}.tumor_alleliccounts.tsv", sample=TUMOR_SAMPLES)
-        
+        expand("output/{sample}.tumor_alleliccounts.tsv", sample=TUMOR_SAMPLES),
+        expand("output/{sample}.den.modelFinal.seg", sample=TUMOR_SAMPLES),
+        expand("output/{sample}.n.cr.seg", sample=TUMOR_SAMPLES),
+        expand("output/{sample}.called.seg", sample=TUMOR_SAMPLES),
+        expand("output/{sample}.called.igv.seg", sample=TUMOR_SAMPLES)
+
 
 include: "rules/Preprocess.smk"
 include: "rules/Collectreadcounts.smk"

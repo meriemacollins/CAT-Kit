@@ -1,0 +1,76 @@
+Assuming unrestricted shared filesystem usage.
+host: Maias-MacBook-Air.local
+Building DAG of jobs...
+Full Traceback (most recent call last):
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/cli.py", line 2308, in args_to_api
+    dag_api.execute_workflow(
+    ~~~~~~~~~~~~~~~~~~~~~~~~^
+        executor=args.executor,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<46 lines>...
+        scheduler_settings=scheduler_settings,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/api.py", line 646, in execute_workflow
+    workflow.execute(
+    ~~~~~~~~~~~~~~~~^
+        executor_plugin=executor_plugin,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        updated_files=updated_files,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/workflow.py", line 1296, in execute
+    self._build_dag()
+    ~~~~~~~~~~~~~~~^^
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/workflow.py", line 1239, in _build_dag
+    self.async_run(self.dag.init())
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/workflow.py", line 268, in async_run
+    return runner.run(coro)
+           ~~~~~~~~~~^^^^^^
+  File "/Users/maia/miniconda3/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/maia/miniconda3/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/dag.py", line 252, in init
+    job = await self.update([job], progress=progress, create_inventory=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/dag.py", line 1228, in update
+    raise exceptions[0]
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/dag.py", line 1171, in update
+    await self.update_(
+    ...<5 lines>...
+    )
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/dag.py", line 1334, in update_
+    raise ex
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/dag.py", line 1317, in update_
+    selected_job = await self.update(
+                   ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/dag.py", line 1228, in update
+    raise exceptions[0]
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/dag.py", line 1171, in update
+    await self.update_(
+    ...<5 lines>...
+    )
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/dag.py", line 1378, in update_
+    raise MissingInputException(job, missing_input)
+snakemake.exceptions.MissingInputException: Missing input files for rule collectreadcounts_normal:
+    output: output/AUR-AG12-NB1.normal_counts.hdf5
+    wildcards: sample=AUR-AG12-NB1
+    affected files:
+        AUR-AG12-NB1
+
+MissingInputException in rule collectreadcounts_normal in file "/Users/maia/Documents/workflow/rules/Collectreadcounts.smk", line 3:
+Missing input files for rule collectreadcounts_normal:
+    output: output/AUR-AG12-NB1.normal_counts.hdf5
+    wildcards: sample=AUR-AG12-NB1
+    affected files:
+        AUR-AG12-NB1

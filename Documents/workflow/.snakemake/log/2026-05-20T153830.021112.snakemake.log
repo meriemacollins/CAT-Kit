@@ -1,0 +1,228 @@
+Assuming unrestricted shared filesystem usage.
+host: Maias-MacBook-Air.local
+Building DAG of jobs...
+Need to rerun job preprocess_interval_WGS because of missing output required by all.
+Need to rerun job collectreadcounts_normal because of missing output required by all.
+Need to rerun job collectreadcounts_tumor because of missing output required by all.
+Need to rerun job createreadcountpanelofnormals because of missing output required by all.
+Need to rerun job denoisereadcounts because of missing output required by all.
+Need to rerun job collectalleliccounts_normal because of missing output required by all.
+Need to rerun job collectalleliccounts_tumor because of missing output required by all.
+Need to rerun job collectreadcounts_normal because job preprocess_interval_WGS has to be rerun.
+Need to rerun job collectreadcounts_tumor because job preprocess_interval_WGS has to be rerun.
+Need to rerun job collectalleliccounts_normal because job preprocess_interval_WGS has to be rerun.
+Need to rerun job collectalleliccounts_tumor because job preprocess_interval_WGS has to be rerun.
+Need to rerun job all because job preprocess_interval_WGS has to be rerun.
+Need to rerun job all because job collectreadcounts_normal has to be rerun.
+Need to rerun job denoisereadcounts because job collectreadcounts_tumor has to be rerun.
+Need to rerun job all because job collectreadcounts_tumor has to be rerun.
+Need to rerun job denoisereadcounts because job createreadcountpanelofnormals has to be rerun.
+Need to rerun job all because job createreadcountpanelofnormals has to be rerun.
+Need to rerun job all because job denoisereadcounts has to be rerun.
+Need to rerun job all because job collectalleliccounts_normal has to be rerun.
+Need to rerun job all because job collectalleliccounts_tumor has to be rerun.
+output/AUR-AG12-TTM1.tumor_counts.hdf5: False 1
+output/AUR-AG12-TTM1.standardizedCR.tsv output/AUR-AG12-TTM1.denoisedCR.tsv: False 2
+output/AUR-AG12-TTM1.tumor_alleliccounts.tsv: False 1
+: False 7
+output/AUR-AG12-NB1.normal_counts.hdf5: False 1
+output/pon.hdf5: True 0
+output/AUR-AG12-NB1.normal_alleliccounts.tsv: False 1
+output/preprocessedintervals.list: True 0
+shared_storage_local_copies: True
+remote_exec: False
+Submitting maximum 100 job(s) over 1.0 second(s).
+Using shell: /bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Conda environments: ignored
+Job stats:
+job                              count
+-----------------------------  -------
+createreadcountpanelofnormals        1
+preprocess_interval_WGS              1
+collectalleliccounts_normal          1
+collectalleliccounts_tumor           1
+collectreadcounts_normal             1
+collectreadcounts_tumor              1
+denoisereadcounts                    1
+all                                  1
+total                                8
+
+Resources before job selection: {'_cores': 1, '_nodes': 9223372036854775807, '_job_count': 9223372036854775807}
+Ready jobs: 2
+Select jobs to execute...
+Selected jobs: 1
+Resources after job selection: {'_cores': 0, '_nodes': 9223372036854775806, '_job_count': 100}
+Execute 1 jobs...
+[Wed May 20 15:38:30 2026]
+localrule createreadcountpanelofnormals:
+    input: data/bams/normal/AUR-AG12-NB1.bam
+    output: output/pon.hdf5
+    log: logs/gatk/createreadcountpanelofnormals.log
+    jobid: 4
+    reason: Missing output files: output/pon.hdf5
+    resources: tmpdir=/var/folders/js/47lf8p8j62932tb9qj2cpp7r0000gn/T
+Waiting for running jobs to complete.
+Resources before job selection: {'_cores': 0, '_nodes': 9223372036854775806, '_job_count': 100}
+Ready jobs: 1
+Select jobs to execute...
+Selected jobs: 0
+Resources after job selection: {'_cores': 0, '_nodes': 9223372036854775806, '_job_count': 100}
+Waiting for running jobs to complete.
+Full Traceback (most recent call last):
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/executors/local.py", line 432, in run_wrapper
+    run(
+    ~~~^
+        input,
+        ^^^^^^
+    ...<23 lines>...
+        runtime_paths,
+        ^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/maia/Documents/workflow/rules/Denoisereadcounts.smk", line 39, in __rule_createreadcountpanelofnormals
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/shell.py", line 359, in __new__
+    raise sp.CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'set -euo pipefail;  gatk CreateReadCountPanelOfNormals-I data/bams/normal/AUR-AG12-NB1.bam-O output/pon.hdf5' returned non-zero exit status 2.
+
+Full Traceback (most recent call last):
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/executors/local.py", line 432, in run_wrapper
+    run(
+    ~~~^
+        input,
+        ^^^^^^
+    ...<23 lines>...
+        runtime_paths,
+        ^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/maia/Documents/workflow/rules/Denoisereadcounts.smk", line 39, in __rule_createreadcountpanelofnormals
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/shell.py", line 359, in __new__
+    raise sp.CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'set -euo pipefail;  gatk CreateReadCountPanelOfNormals-I data/bams/normal/AUR-AG12-NB1.bam-O output/pon.hdf5' returned non-zero exit status 2.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/executors/local.py", line 267, in _callback
+    raise ex
+  File "/Users/maia/miniconda3/lib/python3.13/concurrent/futures/thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/executors/local.py", line 236, in cached_or_run
+    self.workflow.async_run(self.acached_or_run(job, run_func, *args))
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/workflow.py", line 268, in async_run
+    return runner.run(coro)
+           ~~~~~~~~~~^^^^^^
+  File "/Users/maia/miniconda3/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/maia/miniconda3/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/executors/local.py", line 253, in acached_or_run
+    run_func(*args)
+    ~~~~~~~~^^^^^^^
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/executors/local.py", line 469, in run_wrapper
+    raise RuleException(
+    ...<3 lines>...
+    )
+snakemake.exceptions.RuleException: CalledProcessError in file "/Users/maia/Documents/workflow/rules/Denoisereadcounts.smk", line 16:
+Command 'set -euo pipefail;  gatk CreateReadCountPanelOfNormals-I data/bams/normal/AUR-AG12-NB1.bam-O output/pon.hdf5' returned non-zero exit status 2.
+
+RuleException:
+CalledProcessError in file "/Users/maia/Documents/workflow/rules/Denoisereadcounts.smk", line 16:
+Command 'set -euo pipefail;  gatk CreateReadCountPanelOfNormals-I data/bams/normal/AUR-AG12-NB1.bam-O output/pon.hdf5' returned non-zero exit status 2.
+[Wed May 20 15:38:31 2026]
+Error in rule createreadcountpanelofnormals:
+    message: None
+    jobid: 4
+    input: data/bams/normal/AUR-AG12-NB1.bam
+    output: output/pon.hdf5
+    log: logs/gatk/createreadcountpanelofnormals.log (check log file(s) for error details)
+    shell:
+        gatk CreateReadCountPanelOfNormals-I data/bams/normal/AUR-AG12-NB1.bam-O output/pon.hdf5
+        (command exited with non-zero exit code)
+unlocking
+Full Traceback (most recent call last):
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/jobs.py", line 1301, in postprocess
+    await self.dag.workflow.persistence.finished(self)
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/persistence/__init__.py", line 474, in finished
+    conda_env = self._conda_env(job)
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/persistence/__init__.py", line 708, in _conda_env
+    return b64encode(job.conda_env.content).decode()
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/deployment/conda.py", line 193, in content
+    self._content = self._get_content()
+                    ~~~~~~~~~~~~~~~~~^^
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/deployment/conda.py", line 168, in _get_content
+    return self.workflow.sourcecache.open(self.file, "rb").read()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/sourcecache.py", line 726, in open
+    cache_entry = self._cache(source_file)
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/sourcecache.py", line 763, in _cache
+    self._do_cache(source_file, cache_entry)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/sourcecache.py", line 767, in _do_cache
+    mtime = source_file.mtime()
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/sourcecache.py", line 203, in mtime
+    return os.stat(self.path).st_mtime
+           ~~~~~~~^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/maia/Documents/workflow/rules/envs/gatk.yml'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/cli.py", line 2308, in args_to_api
+    dag_api.execute_workflow(
+    ~~~~~~~~~~~~~~~~~~~~~~~~^
+        executor=args.executor,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<46 lines>...
+        scheduler_settings=scheduler_settings,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/api.py", line 646, in execute_workflow
+    workflow.execute(
+    ~~~~~~~~~~~~~~~~^
+        executor_plugin=executor_plugin,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        updated_files=updated_files,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/workflow.py", line 1461, in execute
+    raise e
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/workflow.py", line 1457, in execute
+    success = self.scheduler.schedule()
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/scheduling/job_scheduler.py", line 410, in schedule
+    raise e
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/scheduling/job_scheduler.py", line 234, in schedule
+    self._error_jobs()
+    ~~~~~~~~~~~~~~~~^^
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/scheduling/job_scheduler.py", line 510, in _error_jobs
+    self._handle_error(job)
+    ~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/scheduling/job_scheduler.py", line 561, in _handle_error
+    self.workflow.async_run(job.postprocess(error=True))
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/workflow.py", line 268, in async_run
+    return runner.run(coro)
+           ~~~~~~~~~~^^^^^^
+  File "/Users/maia/miniconda3/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/maia/miniconda3/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/maia/miniconda3/lib/python3.13/site-packages/snakemake/jobs.py", line 1303, in postprocess
+    raise WorkflowError(
+    ...<3 lines>...
+    )
+snakemake_interface_common.exceptions.WorkflowError: Error recording metadata for finished job ([Errno 2] No such file or directory: '/Users/maia/Documents/workflow/rules/envs/gatk.yml'). Please ensure write permissions for the directory /Users/maia/Documents/workflow/.snakemake
+
+WorkflowError:
+Error recording metadata for finished job ([Errno 2] No such file or directory: '/Users/maia/Documents/workflow/rules/envs/gatk.yml'). Please ensure write permissions for the directory /Users/maia/Documents/workflow/.snakemake
