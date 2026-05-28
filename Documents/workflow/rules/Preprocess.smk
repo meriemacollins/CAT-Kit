@@ -4,7 +4,7 @@ if config["seq_type"] == "WGS":
         input:
             reference = "data/reference/hs38DH.fa"
         output:
-            interval = "output/preprocessedintervals.list"
+            interval = "output/preprocessedintervals.interval_list"
         conda:
             "envs/gatk.yml"
         params:
@@ -25,9 +25,9 @@ if config["seq_type"] == "WES":
     rule preprocess_interval_WES:
         input:
             reference = 'data/reference/hs38DH.fa',
-            intervals = 'data/reference/Aurora_US.Exome_2019.bed'
+            #intervals = 'data/reference/Aurora_US.Exome_2019.bed'
         output:
-            interval = "output/preprocessedintervals.list"
+            interval = "output/preprocessedintervals.interval_list"
         conda:
             "envs/gatk.yml"
         params:
@@ -39,7 +39,7 @@ if config["seq_type"] == "WES":
         shell:
             "gatk --java-options '{params.java_opts}' PreprocessIntervals "
             "-R {input.reference} "
-            "-L {input.intervals} "
+            #"-L {input.intervals} "
             "--bin-length 0 "
             "--padding {params.padding} "
             "--interval-merging-rule OVERLAPPING_ONLY "

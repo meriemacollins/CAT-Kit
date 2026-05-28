@@ -3,7 +3,7 @@
 rule collectalleliccounts_normal:
     input:
         bam = "data/bams/normal/{sample}.bam",
-        intervals= "output/preprocessedintervals.list",
+        intervals = 'data/reference/Aurora_US.Exome_2019.bed',
         reference = "data/reference/hs38DH.fa"
     output:
         counts="output/{sample}.normal_alleliccounts.tsv"
@@ -14,18 +14,22 @@ rule collectalleliccounts_normal:
     threads: 1
     params:
         extra="",  # optional
-        java_opts="",  # optional
+        java_opts_allelic=config["java_opts_allelic"]  # optional
     resources:
         mem_mb=1024,
-    wrapper:
-        "v7.6.0/bio/gatk/collectalleliccounts"
+    shell:
+        "gatk --java-options '{params.java_opts_allelic}' CollectAllelicCounts "
+        "-L {input.intervals} "
+        "-I {input.bam} "
+        "-R {input.reference} "
+        "-O {output.counts}"
 
 #Tumor
 #If you have BAM, interval list and fasta then run
 rule collectalleliccounts_tumor:
     input:
         bam = "data/bams/tumor/{sample}.bam",
-        intervals = "output/preprocessedintervals.list",
+        intervals = 'data/reference/Aurora_US.Exome_2019.bed',
         reference = "data/reference/hs38DH.fa"
     output:
         counts="output/{sample}.tumor_alleliccounts.tsv"
@@ -36,8 +40,13 @@ rule collectalleliccounts_tumor:
     threads: 1
     params:
         extra="",  # optional
-        java_opts=""  # optional
+        java_opts_allelic=config["java_opts_allelic"]  # optional
     resources:
         mem_mb=1024
-    wrapper:
-        "v7.6.0/bio/gatk/collectalleliccounts"
+    shell:
+        "gatk --java-options '{params.java_opts_allelic}' CollectAllelicCounts "
+        "-L {input.intervals} "
+        "-I {input.bam} "
+        "-R {input.reference} "
+        "-O {output.counts}"
+

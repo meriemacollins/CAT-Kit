@@ -31,11 +31,16 @@ rule denoisereadcounts:
     threads: 1
     params:
         extra="",  # optional
-        java_opts=""  # optional
+        java_opts_denoise=config["java_opts_denoise"]  
     resources:
         mem_mb=1024
-    wrapper:
-        "v7.6.0/bio/gatk/denoisereadcounts"
+    shell:
+        "gatk --java-options '{params.java_opts_denoise}' DenoiseReadCounts "
+        "-I {input.hdf5} "
+        "--count-panel-of-normals {input.pon} "
+        "--standardized-copy-ratios {output.std_copy_ratio} "
+        "--denoised-copy-ratios {output.denoised_copy_ratio}  "
+ 
 
 
 
