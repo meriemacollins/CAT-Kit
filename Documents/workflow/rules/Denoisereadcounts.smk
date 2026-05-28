@@ -2,7 +2,7 @@
 #If you have normal samples run
 rule createreadcountpanelofnormals:
     input:
-        bam = expand("output/{sample}.normal_counts.hdf5", sample=NORMAL_SAMPLES)
+       hdf5 = expand("output/{sample}.normal_counts.hdf5", sample=NORMAL_SAMPLES)
     output:
         pon = "output/pon.hdf5"
     conda:
@@ -12,7 +12,7 @@ rule createreadcountpanelofnormals:
     threads: 1
     shell:
         "gatk CreateReadCountPanelOfNormals "
-        "-I {input.bam} "
+        "-I {input.hdf5} "
         "-O {output.pon} "
 
 

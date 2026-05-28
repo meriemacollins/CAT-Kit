@@ -25,7 +25,7 @@ if config["seq_type"] == "WES":
     rule preprocess_interval_WES:
         input:
             reference = 'data/reference/hs38DH.fa',
-            #intervals = 'data/reference/Aurora_US.Exome_2019.bed'
+            intervals = 'data/reference/Aurora_US.Exome_2019.bed'
         output:
             interval = "output/preprocessedintervals.interval_list"
         conda:
@@ -39,8 +39,8 @@ if config["seq_type"] == "WES":
         shell:
             "gatk --java-options '{params.java_opts}' PreprocessIntervals "
             "-R {input.reference} "
-            #"-L {input.intervals} "
-            "--bin-length 0 "
+            "-L {input.intervals} "
+            "--bin-length 200 "
             "--padding {params.padding} "
             "--interval-merging-rule OVERLAPPING_ONLY "
             "-O {output.interval} "

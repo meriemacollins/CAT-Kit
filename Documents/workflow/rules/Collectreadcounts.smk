@@ -3,7 +3,7 @@
 rule collectreadcounts_normal:
     input:
         bam = "data/bams/normal/{sample}.bam", 
-        intervals = 'data/reference/Aurora_US.Exome_2019.bed'
+        intervals = "output/preprocessedintervals.interval_list"
     output:
         counts="output/{sample}.normal_counts.hdf5"
     log:
@@ -22,7 +22,7 @@ rule collectreadcounts_normal:
 rule collectreadcounts_tumor:
     input:
         bam = "data/bams/tumor/{sample}.bam", 
-        intervals = 'data/reference/Aurora_US.Exome_2019.bed'
+        intervals = "output/preprocessedintervals.interval_list"
     output:
         counts = "output/{sample}.tumor_counts.hdf5"
     log:
