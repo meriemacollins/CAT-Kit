@@ -9,7 +9,7 @@ TUMOR_SAMPLES, = glob_wildcards("data/bams/tumor/{sample}.bam")
 
 rule all: 
     input: 
-        "output/preprocessedintervals.list",
+        "output/preprocessedintervals.interval_list",
         expand("output/{sample}.normal_counts.hdf5", sample=NORMAL_SAMPLES),
         expand("output/{sample}.tumor_counts.hdf5", sample=TUMOR_SAMPLES),
         "output/pon.hdf5",
@@ -28,4 +28,3 @@ include: "rules/Collectreadcounts.smk"
 include: "rules/Denoisereadcounts.smk"
 include: "rules/Collectalleliccounts.smk"
 include: "rules/Modelandcall.smk"
-

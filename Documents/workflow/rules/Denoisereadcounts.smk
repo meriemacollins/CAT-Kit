@@ -2,7 +2,7 @@
 #If you have normal samples run
 rule createreadcountpanelofnormals:
     input:
-        bam = expand("output/{sample}.normal_counts.hdf5", sample=NORMAL_SAMPLES)
+       hdf5 = expand("output/{sample}.normal_counts.hdf5", sample=NORMAL_SAMPLES)
     output:
         pon = "output/pon.hdf5"
     conda:
@@ -12,7 +12,7 @@ rule createreadcountpanelofnormals:
     threads: 1
     shell:
         "gatk CreateReadCountPanelOfNormals "
-        "-I {input.bam} "
+        "-I {input.hdf5} "
         "-O {output.pon} "
 
 
@@ -31,11 +31,16 @@ rule denoisereadcounts:
     threads: 1
     params:
         extra="",  # optional
-        java_opts=""  # optional
+        java_opts_denoise=config["java_opts_denoise"]  
     resources:
         mem_mb=1024
-    wrapper:
-        "v7.6.0/bio/gatk/denoisereadcounts"
+    shell:
+        "gatk --java-options '{params.java_opts_denoise}' DenoiseReadCounts "
+        "-I {input.hdf5} "
+        "--count-panel-of-normals {input.pon} "
+        "--standardized-copy-ratios {output.std_copy_ratio} "
+        "--denoised-copy-ratios {output.denoised_copy_ratio}  "
+ 
 
 
 

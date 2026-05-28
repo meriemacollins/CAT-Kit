@@ -7,4 +7,9 @@ tumor_bam_dir: "data/bams/tumor/"
 seq_type: "WES"
 bin_length: "1000"
 padding: "250"
-java_opts: "-Xmx4g"
+java_opts: "-Xmx4g" #preprocess intervals
+
+#specify max memory for other rules
+java_opts_allelic: "-Xmx15g" #allelic counts
+java_opts_denoise: "-Xmx12g" #denoise read counts 
+java_opts_model: "-Xmx31g" #model segments 
