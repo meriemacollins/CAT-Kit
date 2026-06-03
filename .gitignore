@@ -3,6 +3,7 @@ output/
 logs/
 .snakemake/log
 .snakemake/
+Documents/workflow/.snakemake/conda
 *.fa*
 *.FA*
 *.ba*
