@@ -2,6 +2,7 @@ data/
 output/
 logs/
 .snakemake/log
+.snakemake/
 *.fa*
 *.FA*
 *.ba*
