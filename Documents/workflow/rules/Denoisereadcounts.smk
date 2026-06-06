@@ -6,7 +6,7 @@ rule createreadcountpanelofnormals:
     output:
         pon = "output/pon.hdf5"
     conda:
-        "envs/gatk.yml"
+        "../envs/gatk.yml"
     log:
         "logs/gatk/createreadcountpanelofnormals.log"
     threads: 1
@@ -26,7 +26,7 @@ rule denoisereadcounts:
         std_copy_ratio="output/{sample}.standardizedCR.tsv",
         denoised_copy_ratio="output/{sample}.denoisedCR.tsv"
     conda:
-        "envs/gatk.yml"
+        "../envs/gatk.yml"
     log:
         "logs/gatk/{sample}.denoisereadcounts.log"
     threads: 1

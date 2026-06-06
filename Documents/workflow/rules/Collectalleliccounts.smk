@@ -7,7 +7,7 @@ rule collectalleliccounts_normal:
     output:
         normal_counts ="output/normal_counts/{sample}.normal_alleliccounts.tsv"
     conda:
-        "envs/gatk.yml"
+        "../envs/gatk.yml"
     log:
         "logs/gatk/{sample}.collectalleliccountsnormal.log"
     threads: 1
@@ -32,7 +32,7 @@ rule collectalleliccounts_tumor:
     output:
         tumor_counts="output/tumor_counts/{sample}.tumor_alleliccounts.tsv"
     conda:
-        "envs/gatk.yml"
+        "../envs/gatk.yml"
     log:
         "logs/gatk/{sample}.collectalleliccountstumor.log"
     threads: 1

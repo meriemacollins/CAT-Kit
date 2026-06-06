@@ -22,6 +22,7 @@ rule all:
         expand("output/tumor_counts/{sample}.tumor_alleliccounts.tsv", sample=TUMOR_SAMPLES),
         expand("output/sandbox/{sample}.modelFinal.seg", sample=TUMOR_SAMPLES),
         expand("output/sandbox/{sample}.cr.seg", sample=TUMOR_SAMPLES),
+        expand("output/sandbox/{sample}.hets.tsv", sample =TUMOR_SAMPLES),
         expand("output/{sample}.called.seg", sample=TUMOR_SAMPLES),
         expand("output/{sample}.called.igv.seg", sample=TUMOR_SAMPLES),
         expand("output/cnvloh_dir/{sample}_cnvloh_output_WES-GATK.json", sample=TUMOR_SAMPLES)

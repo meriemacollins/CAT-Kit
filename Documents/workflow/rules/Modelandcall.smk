@@ -6,9 +6,10 @@ rule modelsegments_denoise_input:
         normal_counts = lambda wc: f"output/normal_counts/{PAIRS[wc.sample]}.normal_alleliccounts.tsv"
     output:
          seg = "output/sandbox/{sample}.modelFinal.seg",
-         cr_seg ="output/sandbox/{sample}.cr.seg"
+         cr_seg ="output/sandbox/{sample}.cr.seg",
+         hets = "output/sandbox/{sample}.hets.tsv"
     conda:
-        "envs/gatk.yml"
+        "../envs/gatk.yml"
     log:
         "logs/gatk/modelsegments_denoise_{sample}.log"
     threads: 1
@@ -37,7 +38,7 @@ rule call_copy_ratio_segments:
         called_copy_ratio_seg="output/{sample}.called.seg",
         igv_seg="output/{sample}.called.igv.seg"
     conda:
-        "envs/gatk.yml"
+        "../envs/gatk.yml"
     log:
         "logs/gatk/call_copy_ratio_segments_{sample}.log"
     threads: 1

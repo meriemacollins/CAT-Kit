@@ -7,7 +7,7 @@ rule create_json:
     output:
         json = "output/cnvloh_dir/{sample}_cnvloh_output_WES-GATK.json"
     conda:
-        "envs/json.yml"
+        "../envs/json.yml"
     log:
         "logs/json/{sample}.json.log"
     threads: 1

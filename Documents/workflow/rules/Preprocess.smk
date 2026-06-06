@@ -6,7 +6,7 @@ if config["seq_type"] == "WGS":
         output:
             interval = "output/preprocessedintervals.interval_list"
         conda:
-            "envs/gatk.yml"
+            "../envs/gatk.yml"
         params:
             bin_length = config["bin_length"]#specified in config
         threads: 1
@@ -29,7 +29,7 @@ if config["seq_type"] == "WES":
         output:
             interval = "output/preprocessedintervals.interval_list"
         conda:
-            "envs/gatk.yml"
+            "../envs/gatk.yml"
         params:
             padding = config["padding"], #inputs padding specified in the config file 
             java_opts = config ["java_opts"] #user must be able to specify 
