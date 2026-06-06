@@ -1,15 +1,24 @@
+# To prevent data leaks and uploading large files
+*.vscode/*
 data/
 output/
 logs/
 .snakemake/log
 .snakemake/
 Documents/workflow/.snakemake/conda
+Documents/workflow/.snakemake/*
 *.conda
 *.pyc
 __pycache__/
+*.gz*
 *.jar
 *.fa*
 *.FA*
 *.ba*
 *.BA*
 *.bed
+*.png
+*.txt*
+*.csv
+*.fq
+*.fq.gz
