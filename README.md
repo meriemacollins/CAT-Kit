@@ -1,4 +1,4 @@
-# CAT-Kit
+CAT-Kit
 CNV Analysis Tool Kit
 
 GATK CNV workflow streamlined using Snakemake 
