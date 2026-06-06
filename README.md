@@ -1,7 +1,8 @@
 CAT-Kit
+
 CNV Analysis Tool Kit
 
-GATK CNV workflow streamlined using Snakemake 
+*GATK CNV workflow streamlined using Snakemake and containerised using Docker* 
 
 channels:
 - conda-forge
