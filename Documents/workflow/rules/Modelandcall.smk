@@ -21,6 +21,12 @@ rule modelsegments_denoise_input:
         "--denoised-copy-ratios {input.denoised_copy_ratio} "
         "--allelic-counts {input.tumor_counts} "
         "--normal-allelic-counts {input.normal_counts} "
+        "--number-of-changepoints-penalty-factor 1.25 "
+        "--kernel-variance-allele-fraction 0.025 "
+        "--kernel-variance-copy-ratio 0.0 "
+        "--kernel-scaling-allele-fraction 1.0 "
+        "--smoothing-credible-interval-threshold-allele-fraction 2.0 "
+        "--smoothing-credible-interval-threshold-copy-ratio 2.0 "
         "--output output/sandbox/ "
         "--output-prefix {params.prefix} "
 

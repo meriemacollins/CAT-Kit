@@ -1,30 +1,38 @@
 configfile: "config/config.yaml"
 
+PAIRS = config["pairs"]                  
+TUMOR_SAMPLES = list(PAIRS.keys())              
+NORMAL_SAMPLES = list(set(PAIRS.values()))  # set will make sure the same normal sample is not used multiple times for the PON
+
 wildcard_constraints:
     sample="[^/]+"
 
-
-NORMAL_SAMPLES, = glob_wildcards("data/bams/normal/{sample}.bam")
-TUMOR_SAMPLES, = glob_wildcards("data/bams/tumor/{sample}.bam")
+#NORMAL_SAMPLES, = glob_wildcards("data/bams/normal/{sample}.bam")
+#TUMOR_SAMPLES, = glob_wildcards("data/bams/tumor/{sample}.bam")
 
 rule all: 
     input: 
         "output/preprocessedintervals.interval_list",
         expand("output/{sample}.normal_counts.hdf5", sample=NORMAL_SAMPLES),
-        expand("output/{sample}.tumor_counts.hdf5", sample=TUMOR_SAMPLES),
+        expand("output/{sample}.tumor_counts.tsv", sample=TUMOR_SAMPLES),
         "output/pon.hdf5",
         expand("output/{sample}.standardizedCR.tsv", sample=TUMOR_SAMPLES),
         expand("output/{sample}.denoisedCR.tsv", sample=TUMOR_SAMPLES),
-        expand("output/{sample}.normal_alleliccounts.tsv", sample=NORMAL_SAMPLES),
-        expand("output/{sample}.tumor_alleliccounts.tsv", sample=TUMOR_SAMPLES),
-        expand("output/{sample}.den.modelFinal.seg", sample=TUMOR_SAMPLES),
-        expand("output/{sample}.n.cr.seg", sample=TUMOR_SAMPLES),
+        expand("output/normal_counts/{sample}.normal_alleliccounts.tsv", sample=NORMAL_SAMPLES),
+        expand("output/tumor_counts/{sample}.tumor_alleliccounts.tsv", sample=TUMOR_SAMPLES),
+        expand("output/sandbox/{sample}.modelFinal.seg", sample=TUMOR_SAMPLES),
+        expand("output/sandbox/{sample}.cr.seg", sample=TUMOR_SAMPLES),
         expand("output/{sample}.called.seg", sample=TUMOR_SAMPLES),
-        expand("output/{sample}.called.igv.seg", sample=TUMOR_SAMPLES)
+        expand("output/{sample}.called.igv.seg", sample=TUMOR_SAMPLES),
+        expand("output/cnvloh_dir/{sample}_cnvloh_output_WES-GATK.json", sample=TUMOR_SAMPLES)
+        #expand("output/cnvloh_dir/{sample}.json", sample=TUMOR_SAMPLES)
 
+    
 
 include: "rules/Preprocess.smk"
 include: "rules/Collectreadcounts.smk"
 include: "rules/Denoisereadcounts.smk"
 include: "rules/Collectalleliccounts.smk"
 include: "rules/Modelandcall.smk"
+include: "rules/CNVjson.smk"
+include: "rules/Plots.smk"

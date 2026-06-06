@@ -24,12 +24,12 @@ rule collectreadcounts_tumor:
         bam = "data/bams/tumor/{sample}.bam", 
         intervals = "output/preprocessedintervals.interval_list"
     output:
-        counts = "output/{sample}.tumor_counts.hdf5"
+        counts = "output/{sample}.tumor_counts.tsv"
     log:
         "logs/gatk/{sample}.collectreadcountstumor.log"
     threads: 1
     params:
-        extra="",  # optional
+        extra="--format TSV",  # optional
         java_opts="",  # optional
     resources:
         mem_mb=1024,

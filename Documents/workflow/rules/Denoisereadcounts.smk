@@ -10,16 +10,17 @@ rule createreadcountpanelofnormals:
     log:
         "logs/gatk/createreadcountpanelofnormals.log"
     threads: 1
+    params: 
+        flags = lambda wildcards, input: " ".join([f"-I {f}" for f in input.hdf5])
     shell:
         "gatk CreateReadCountPanelOfNormals "
-        "-I {input.hdf5} "
+        "{params.flags} "
         "-O {output.pon} "
-
 
 #If you have read counts and PoN then run
 rule denoisereadcounts:
     input:
-        hdf5 ="output/{sample}.tumor_counts.hdf5",
+        hdf5 ="output/{sample}.tumor_counts.tsv",
         pon = "output/pon.hdf5"
     output:
         std_copy_ratio="output/{sample}.standardizedCR.tsv",
@@ -32,8 +33,6 @@ rule denoisereadcounts:
     params:
         extra="",  # optional
         java_opts_denoise=config["java_opts_denoise"]  
-    resources:
-        mem_mb=1024
     shell:
         "gatk --java-options '{params.java_opts_denoise}' DenoiseReadCounts "
         "-I {input.hdf5} "

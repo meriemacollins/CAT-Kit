@@ -1,4 +1,4 @@
-name: snakemake-env
+name: gatk
 channels:
   - conda-forge
   - bioconda

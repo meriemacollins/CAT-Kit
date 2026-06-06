@@ -13,3 +13,14 @@ java_opts: "-Xmx4g" #preprocess intervals
 java_opts_allelic: "-Xmx15g" #allelic counts
 java_opts_denoise: "-Xmx12g" #denoise read counts 
 java_opts_model: "-Xmx31g" #model segments 
+
+#specify your samples here
+#tumor_samples and normal pair
+pairs:
+  "AUR-AG12-TTM1": "AUR-AG12-NB1"
+ # "AUR-AG12-TTP1": "AUR-AG12-NB1"
+
+#specify to run JSON
+sample_name: AUR-AG12-TTM1
+case_name: AUR-AG12
+sample_type: Tumor_Normal

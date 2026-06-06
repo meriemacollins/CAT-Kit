@@ -1,0 +1,16 @@
+name: json-env
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - gatk-package-4.6.2.0
+  - bokeh==2.3.3
+  - certifi-2026.5.20
+  - scipy-1.17.1 
+  - pandas             
+  - python-dateutil    
+  - python-tzdata      
+  - pytz               
+  - six 
+  - more-itertools
