@@ -4,6 +4,9 @@ logs/
 .snakemake/log
 .snakemake/
 Documents/workflow/.snakemake/conda
+*.conda
+*.pyc
+__pycache__/
 *.jar
 *.fa*
 *.FA*
