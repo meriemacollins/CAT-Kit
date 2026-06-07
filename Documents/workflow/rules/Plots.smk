@@ -1,6 +1,6 @@
 rule plot_interactive_cnvloh:
     input:
-        json = "output/cnvloh_dir/{sample}.json"
+        json = "output/cnvloh_dir/{sample}_cnvloh_output_WES-GATK.json"
     output:
         html = "output/cnvloh_dir/{sample}_interactive.html"
     conda:
