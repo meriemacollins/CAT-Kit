@@ -15,6 +15,9 @@ rule all:
         "output/preprocessedintervals.interval_list",
         expand("output/{sample}.normal_counts.hdf5", sample=NORMAL_SAMPLES),
         expand("output/{sample}.tumor_counts.tsv", sample=TUMOR_SAMPLES),
+        expand("output/targets.filtered.interval_list", sample=NORMAL_SAMPLES),
+        expand("output/{sample}.filtered_normal_counts.hdf5", sample=NORMAL_SAMPLES),
+        expand("output/{sample}.filtered_tumor_counts.tsv", sample=TUMOR_SAMPLES),
         "output/pon.hdf5",
         expand("output/{sample}.standardizedCR.tsv", sample=TUMOR_SAMPLES),
         expand("output/{sample}.denoisedCR.tsv", sample=TUMOR_SAMPLES),
@@ -31,8 +34,11 @@ rule all:
 
 include: "rules/Preprocess.smk"
 include: "rules/Collectreadcounts.smk"
+include: "rules/Filterintervals.smk"
+include: "rules/Readcountsfiltered.smk"
 include: "rules/Denoisereadcounts.smk"
 include: "rules/Collectalleliccounts.smk"
 include: "rules/Modelandcall.smk"
 include: "rules/CNVjson.smk"
 include: "rules/Plots.smk"
+

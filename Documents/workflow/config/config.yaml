@@ -20,6 +20,14 @@ pairs:
   "AUR-AG12-TTM1": "AUR-AG12-NB1"
  # "AUR-AG12-TTP1": "AUR-AG12-NB1"
 
+#specify model segments parameters here
+nocppf: "1.25"
+kvaf: "0.025"
+kvcr: "0.0"
+ksaf: "1.0"
+scitaf: "2.0"
+scitcr: "2.0"
+
 #specify to run JSON
 sample_name: AUR-AG12-TTM1
 case_name: AUR-AG12

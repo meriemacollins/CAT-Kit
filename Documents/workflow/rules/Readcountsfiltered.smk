@@ -1,13 +1,13 @@
 #Normal
 #If you have normal BAM and interval list then run
-rule collectreadcounts_normal:
+rule filteredreadcounts_normal:
     input:
         bam = "data/bams/normal/{sample}.bam",
-        intervals = "output/preprocessedintervals.interval_list"
+        intervals = "output/targets.filtered.interval_list"
     output:
-        counts = "output/{sample}.normal_counts.hdf5"
+        counts = "output/{sample}.filtered_normal_counts.hdf5"
     log:
-        "logs/gatk/{sample}.collectreadcountsnormal.log"
+        "logs/gatk/{sample}.filteredreadcountsnormal.log"
     threads: 1
     params:
         extra="",  # optional
@@ -17,16 +17,17 @@ rule collectreadcounts_normal:
     wrapper:
         "v7.6.0/bio/gatk/collectreadcounts"
 
+
 #Tumor
 #If you have tumor BAM and interval list then run
-rule collectreadcounts_tumor:
+rule filteredreadcounts_tumor:
     input:
         bam = "data/bams/tumor/{sample}.bam", 
-        intervals = "output/preprocessedintervals.interval_list"
+        intervals = "output/targets.filtered.interval_list"
     output:
-        counts = "output/{sample}.tumor_counts.tsv"
+        counts = "output/{sample}.filtered_tumor_counts.tsv"
     log:
-        "logs/gatk/{sample}.collectreadcountstumor.log"
+        "logs/gatk/{sample}.filteredreadcountstumor.log"
     threads: 1
     params:
         extra="--format TSV",  # optional
@@ -35,14 +36,3 @@ rule collectreadcounts_tumor:
         mem_mb=1024,
     wrapper:
         "v3.5.2/bio/gatk/collectreadcounts"
-        
-      #  shell:
-     #   "gatk CollectReadCounts "
-     #   "-I {input.bam} "
-     #   "-L {input.intervals} "
-     #   "--interval-merging-rule OVERLAPPING_ONLY "
-     #   "-O {output.counts} "
-
-    
-    
-

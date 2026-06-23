@@ -2,7 +2,7 @@ rule create_json:
     input:
         seg = "output/sandbox/{sample}.modelFinal.seg",
         denoised_copy_ratio ="output/{sample}.denoisedCR.tsv",
-        counts = "output/{sample}.tumor_counts.tsv",
+        counts = "output/{sample}.filtered_tumor_counts.tsv",
         hets = "output/sandbox/{sample}.hets.tsv"
     output:
         json = "output/cnvloh_dir/{sample}_cnvloh_output_WES-GATK.json"
