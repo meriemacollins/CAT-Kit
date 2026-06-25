@@ -4,7 +4,7 @@ rule plot_interactive_cnvloh:
     output:
         html = "output/cnvloh_dir/{sample}_interactive.html"
     conda:
-        "../envs/json.yml"
+        "../envs/cnv-bokeh.yml"
     log:
         "logs/json/{sample}.html.log"
     threads: 1

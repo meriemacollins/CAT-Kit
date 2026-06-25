@@ -29,7 +29,7 @@ rule all:
         expand("output/{sample}.called.seg", sample=TUMOR_SAMPLES),
         expand("output/{sample}.called.igv.seg", sample=TUMOR_SAMPLES),
         expand("output/cnvloh_dir/{sample}_cnvloh_output_WES-GATK.json", sample=TUMOR_SAMPLES),
-        expand("output/cnvloh_dir/{sample}_interactive.html", sample=TUMOR_SAMPLES)
+        expand("output/cnvloh_dir/Interactive_Plots_HTML", sample=TUMOR_SAMPLES)
     
 
 include: "rules/Preprocess.smk"

@@ -31,7 +31,7 @@ rule modelsegments_denoise_input:
         "--number-of-changepoints-penalty-factor {params.nocppf} "
         "--kernel-variance-allele-fraction {params.kvaf} "
         "--kernel-variance-copy-ratio {params.kvcr} "
-        "--kernel-scaling-allele-fraction {params.ksaf}"
+        "--kernel-scaling-allele-fraction {params.ksaf} "
         "--smoothing-credible-interval-threshold-allele-fraction {params.scitaf} "
         "--smoothing-credible-interval-threshold-copy-ratio {params.scitcr} "
         "--output output/sandbox/ "
